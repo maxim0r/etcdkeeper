@@ -19,3 +19,9 @@ bin
 # Package Files
 *.war
 *.ear
+
+# Private Taskfile
+Taskfile.yml
+
+# VSC
+.vscode/
