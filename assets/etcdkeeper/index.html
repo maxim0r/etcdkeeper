@@ -117,7 +117,7 @@
 		<span id="statusVersion"></span>
 		<span id="statusSize" style="margin-left: 10px;"></span>
 		<span id="statusMember" style="margin-left: 10px;"></span>
-		<span style="margin-left: 10px;">ETCD Keeper 0.7.5</span>
+		<span style="margin-left: 10px;">ETCD Keeper 0.7.5 (maxor edited)</span>
 	</div>
 	
 	<div id="modeMenu" style="">
@@ -405,7 +405,7 @@
 				}
 				$.ajax({
 					type: 'GET',
-					timeout: 5000,
+					timeout: 50000,
 					url:  url,
 					data: {'key': node.path, 'prefix': 'true'},
 					async: true,

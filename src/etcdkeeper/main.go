@@ -676,6 +676,11 @@ func get(w http.ResponseWriter, r *http.Request) {
 	sess := sessmgr.SessionStart(w, r)
 	v := sess.Get("uinfo")
 	var uinfo *userInfo
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*3) // TODO timeout
+
+	defer cancel()
+
 	if v != nil {
 		uinfo = v.(*userInfo)
 		cli, _ = newClient(uinfo)
@@ -696,9 +701,9 @@ func get(w http.ResponseWriter, r *http.Request) {
 					err  error
 				)
 				if p[1] != "" {
-					resp, err = cli.Get(context.Background(), p[0], clientv3.WithPrefix())
+					resp, err = cli.Get(ctx, p[0], clientv3.WithPrefix())
 				} else {
-					resp, err = cli.Get(context.Background(), p[0])
+					resp, err = cli.Get(ctx, p[0])
 				}
 				if err != nil {
 					data["errorCode"] = 500
@@ -723,7 +728,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 			}
 			data["node"] = pnode
 		} else {
-			if resp, err := cli.Get(context.Background(), key); err != nil {
+			if resp, err := cli.Get(ctx, key); err != nil {
 				data["errorCode"] = 500
 				data["message"] = err.Error()
 			} else {
